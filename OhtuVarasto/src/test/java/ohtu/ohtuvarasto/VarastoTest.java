@@ -1,12 +1,6 @@
 package ohtu.ohtuvarasto;
 
-import org.junit.*;
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -75,4 +69,32 @@ public class VarastoTest {
         varasto = new Varasto(-1,-1);
         varasto.toString();
     }
+
+	@Test
+	public void varastostaEiVoiOttaaNegatiivistaMaaraa() {
+		assertEquals(0.0, varasto.otaVarastosta(-1), vertailuTarkkuus);
+	}
+
+	@Test
+	public void tyhjastaVarastostaEiVoiOttaa() {
+		assertEquals(0.0, varasto.otaVarastosta(1), vertailuTarkkuus);
+	}
+
+	@Test
+	public void varastostaEiVoiOttaaYliSaldon() {
+		varasto.lisaaVarastoon(4);
+		assertEquals(4.0, varasto.otaVarastosta(5), vertailuTarkkuus);
+	}
+
+	@Test
+	public void varastoonEiVoiLaittaaNegatiivistaMaaraa() {
+		varasto.lisaaVarastoon(-1);
+		assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
+	public void varastoonEiVoiLaittaaYliTilavuuden() {
+		varasto.lisaaVarastoon(11);
+		assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+	}
 }
